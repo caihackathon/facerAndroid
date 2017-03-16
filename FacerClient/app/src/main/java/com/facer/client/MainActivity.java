@@ -1,13 +1,17 @@
 package com.facer.client;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -22,7 +26,7 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import com.facer.client.models.Application;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity implements View.OnClickListener  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +77,22 @@ public class MainActivity extends AppCompatActivity {
                     } else if(application.getStatus().equalsIgnoreCase("red")){
                         dynamicButton.setBackgroundColor(Color.rgb(154,0,0));
                     }
+                    dynamicButton.setOnClickListener(MainActivity.this);
                     linearLayout.addView(dynamicButton);
                     RelativeLayout relativeLayout = new RelativeLayout(MainActivity.this);
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(20,20);
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(20, 20);
                     relativeLayout.setLayoutParams(layoutParams);
                     linearLayout.addView(relativeLayout);
                 }
             }
         });
     }
-}
+        public void onClick(View v) {
+            Toast toast;
+            Log.w("ANDROID DYNAMIC VIEWS:", "View Id: " + v.getId());
+            toast = Toast.makeText(MainActivity.this, "Clicked on my dynamically added button!", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 25, 400);
+            toast.show();
+        }
+    }
+
