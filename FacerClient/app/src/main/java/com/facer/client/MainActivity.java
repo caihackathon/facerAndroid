@@ -28,6 +28,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LinearLayout refreshLayout = (LinearLayout) findViewById(R.id.refresh_layout);
+        Button refreshButton = new Button(this);
+        refreshButton.setText("Refresh Status");
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.button_layout);
+                buttonLayout.removeAllViewsInLayout();
+                getApplications();
+            }
+        });
+        refreshLayout.addView(refreshButton);
         getApplications();
     }
 
