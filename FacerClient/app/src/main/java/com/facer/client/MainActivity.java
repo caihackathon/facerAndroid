@@ -50,10 +50,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 LinearLayout linearLayout = (LinearLayout)findViewById(R.id.button_layout);
+
                 for(Application application:applicationList){
                     Button dynamicButton = new Button(MainActivity.this);
                     dynamicButton.setText(application.getApplication());
+                    if(application.getStatus().equalsIgnoreCase("green")){
+                        dynamicButton.setBackgroundColor(Color.GREEN);
+                    } else if(application.getStatus().equalsIgnoreCase("yellow")){
+                        dynamicButton.setBackgroundColor(Color.YELLOW);
+                    } else if(application.getStatus().equalsIgnoreCase("red")){
+                        dynamicButton.setBackgroundColor(Color.RED);
+                    }
                     linearLayout.addView(dynamicButton);
+                    RelativeLayout relativeLayout = new RelativeLayout(MainActivity.this);
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(20,20);
+                    relativeLayout.setLayoutParams(layoutParams);
+                    linearLayout.addView(relativeLayout);
                 }
             }
         });
