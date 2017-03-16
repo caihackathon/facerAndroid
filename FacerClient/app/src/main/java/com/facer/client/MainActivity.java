@@ -67,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
                     Button dynamicButton = new Button(MainActivity.this);
                     dynamicButton.setText(application.getApplication());
                     if(application.getStatus().equalsIgnoreCase("green")){
-                        dynamicButton.setBackgroundColor(Color.GREEN);
+                        dynamicButton.setBackgroundColor(Color.rgb(11,129,0));
                     } else if(application.getStatus().equalsIgnoreCase("yellow")){
-                        dynamicButton.setBackgroundColor(Color.YELLOW);
+                        dynamicButton.setBackgroundColor(Color.rgb(255,191,0));
                     } else if(application.getStatus().equalsIgnoreCase("red")){
-                        dynamicButton.setBackgroundColor(Color.RED);
+                        dynamicButton.setBackgroundColor(Color.rgb(154,0,0));
                     }
                     linearLayout.addView(dynamicButton);
                     RelativeLayout relativeLayout = new RelativeLayout(MainActivity.this);
