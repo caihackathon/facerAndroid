@@ -9,10 +9,13 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.facer.client.models.ApplicationAdapter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -26,7 +29,7 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import com.facer.client.models.Application;
 
-public class MainActivity extends Activity implements View.OnClickListener  {
+public class MainActivity extends Activity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +37,12 @@ public class MainActivity extends Activity implements View.OnClickListener  {
         setContentView(R.layout.activity_main);
         LinearLayout refreshLayout = (LinearLayout) findViewById(R.id.refresh_layout);
         Button refreshButton = new Button(this);
-        refreshButton.setText("Refresh Status");
+        refreshButton.setText(R.string.refresh_status);
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.button_layout);
-                buttonLayout.removeAllViewsInLayout();
+                GridView gridview = (GridView) findViewById(R.id.gridview);
+                gridview.removeAllViewsInLayout();
                 getApplications();
             }
         });
@@ -50,6 +53,8 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     private void getApplications(){
 
         String BASE_URL = "http://10.88.26.16:8080/FacerServerApp/webapi/applications";
+        //String server_URL = R.string.server_url+""+R.string.application_uri;
+
         List<Header> headers = new ArrayList<Header>();
         headers.add(new BasicHeader("Accept", "application/json"));
 
@@ -65,34 +70,10 @@ public class MainActivity extends Activity implements View.OnClickListener  {
                         e.printStackTrace();
                     }
                 }
-                LinearLayout linearLayout = (LinearLayout)findViewById(R.id.button_layout);
-
-                for(Application application:applicationList){
-                    Button dynamicButton = new Button(MainActivity.this);
-                    dynamicButton.setText(application.getApplication());
-                    if(application.getStatus().equalsIgnoreCase("green")){
-                        dynamicButton.setBackgroundColor(Color.rgb(11,129,0));
-                    } else if(application.getStatus().equalsIgnoreCase("yellow")){
-                        dynamicButton.setBackgroundColor(Color.rgb(255,191,0));
-                    } else if(application.getStatus().equalsIgnoreCase("red")){
-                        dynamicButton.setBackgroundColor(Color.rgb(154,0,0));
-                    }
-                    dynamicButton.setOnClickListener(MainActivity.this);
-                    linearLayout.addView(dynamicButton);
-                    RelativeLayout relativeLayout = new RelativeLayout(MainActivity.this);
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(20, 20);
-                    relativeLayout.setLayoutParams(layoutParams);
-                    linearLayout.addView(relativeLayout);
-                }
+                GridView gridview = (GridView) findViewById(R.id.gridview);
+                gridview.setAdapter(new ApplicationAdapter(MainActivity.this,applicationList));
             }
         });
     }
-        public void onClick(View v) {
-            Toast toast;
-            Log.w("ANDROID DYNAMIC VIEWS:", "View Id: " + v.getId());
-            toast = Toast.makeText(MainActivity.this, "Clicked on my dynamically added button!", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP, 25, 400);
-            toast.show();
-        }
-    }
+}
 
