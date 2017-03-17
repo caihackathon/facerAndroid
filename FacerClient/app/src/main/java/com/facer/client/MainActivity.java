@@ -35,19 +35,32 @@ public class MainActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LinearLayout refreshLayout = (LinearLayout) findViewById(R.id.refresh_layout);
-        Button refreshButton = new Button(this);
-        refreshButton.setText(R.string.refresh_button);
-        refreshButton.setOnClickListener(new View.OnClickListener() {
+        getApplications();
+        findViewById(R.id.gridview).setOnTouchListener(new OnSwipeTouchListener(this){
             @Override
-            public void onClick(View v) {
+            public void onSwipeDown() {
+                Toast.makeText(MainActivity.this, "Down", Toast.LENGTH_SHORT).show();
                 GridView gridview = (GridView) findViewById(R.id.gridview);
                 gridview.removeAllViewsInLayout();
                 getApplications();
             }
+
+            @Override
+            public void onSwipeLeft() {
+                Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSwipeUp() {
+                Toast.makeText(MainActivity.this, "Up", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSwipeRight() {
+                Toast.makeText(MainActivity.this, "Right", Toast.LENGTH_SHORT).show();
+            }
+
         });
-        refreshLayout.addView(refreshButton);
-        getApplications();
     }
 
     private void getApplications(){
