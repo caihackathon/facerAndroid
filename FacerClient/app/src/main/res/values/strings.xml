@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Facer</string>
-    <string name="second_page">Welcome to second page!</string>
+    <string name="refresh_button">Refresh</string>
 </resources>

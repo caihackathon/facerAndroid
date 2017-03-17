@@ -37,7 +37,7 @@ public class MainActivity extends Activity  {
         setContentView(R.layout.activity_main);
         LinearLayout refreshLayout = (LinearLayout) findViewById(R.id.refresh_layout);
         Button refreshButton = new Button(this);
-        refreshButton.setText(R.string.refresh_status);
+        refreshButton.setText(R.string.refresh_button);
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
